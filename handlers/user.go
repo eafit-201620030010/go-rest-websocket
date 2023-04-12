@@ -9,14 +9,14 @@ import (
 	"net/http"
 )
 
+type SignUpResponse struct {
+	ID    string `json:"id"`
+	Email string `json:"email"`
+}
+
 type SignUpRequest struct {
 	Email    string `json:"email"`
 	Password string `json:"password"`
-}
-
-type SignUpResponse struct {
-	Id    string `json:"id"`
-	Email string `json:"email"`
 }
 
 func SignUpHandler(s server.Server) http.HandlerFunc {
@@ -37,7 +37,6 @@ func SignUpHandler(s server.Server) http.HandlerFunc {
 			Password: request.Password,
 			Id:       id.String(),
 		}
-
 		err = repository.InsertUser(r.Context(), &user)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -45,8 +44,9 @@ func SignUpHandler(s server.Server) http.HandlerFunc {
 		}
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(SignUpResponse{
-			Id:    user.Id,
+			ID:    user.Id,
 			Email: user.Email,
 		})
+
 	}
 }
