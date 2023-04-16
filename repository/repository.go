@@ -6,13 +6,19 @@ import (
 )
 
 type Repository interface {
+	// user
 	InsertUser(ctx context.Context, user *models.User) error
 	GetUserByID(ctx context.Context, id string) (*models.User, error)
 	GetUserByEmail(ctx context.Context, email string) (*models.User, error)
+
+	// post
 	InsertPost(ctx context.Context, post *models.Post) error
 	GetPostById(ctx context.Context, id string) (*models.Post, error)
 	UpdatePost(ctx context.Context, post *models.Post) error
 	DeletePost(ctx context.Context, id string, userId string) error
+	ListPost(ctx context.Context, page uint64) ([]*models.Post, error)
+
+	// close db
 	Close() error
 }
 
@@ -48,6 +54,10 @@ func UpdatePost(ctx context.Context, post *models.Post) error {
 
 func DeletePost(ctx context.Context, id string, userId string) error {
 	return implementation.DeletePost(ctx, id, userId)
+}
+
+func ListPost(ctx context.Context, page uint64) ([]*models.Post, error) {
+	return implementation.ListPost(ctx, page)
 }
 
 func Close() error {
