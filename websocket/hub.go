@@ -9,9 +9,7 @@ import (
 )
 
 var upgrader = websocket.Upgrader{
-	CheckOrigin: func(r *http.Request) bool {
-		return true
-	},
+	CheckOrigin: func(r *http.Request) bool { return true },
 }
 
 type Hub struct {
@@ -30,28 +28,23 @@ func NewHub() *Hub {
 	}
 }
 
-func (hub *Hub) HandleWebSocket(w http.ResponseWriter, r *http.Request) {
-	socket, err := upgrader.Upgrade(w, r, nil)
-	if err != nil {
-		log.Println(err)
-		http.Error(w, "Could not open websocket connection", http.StatusBadRequest)
-	}
-	client := NewClient(hub, socket)
-	hub.register <- client
-
-	go client.Write()
-
-}
-
 func (hub *Hub) Run() {
 	for {
 		select {
 		case client := <-hub.register:
 			hub.onConnect(client)
-		case client := <-hub.register:
+		case client := <-hub.unregister:
 			hub.onDisconnect(client)
 		}
+	}
+}
 
+func (hub *Hub) Broadcast(message interface{}, ignore *Client) {
+	data, _ := json.Marshal(message)
+	for _, client := range hub.clients {
+		if client != ignore {
+			client.outbound <- data
+		}
 	}
 }
 
@@ -62,34 +55,37 @@ func (hub *Hub) onConnect(client *Client) {
 	defer hub.mutex.Unlock()
 	client.id = client.socket.RemoteAddr().String()
 	hub.clients = append(hub.clients, client)
-
 }
 
 func (hub *Hub) onDisconnect(client *Client) {
-	log.Println("Client Disconnected", client.socket.RemoteAddr())
-	client.socket.Close()
+	log.Println("Client disconnected", client.socket.RemoteAddr())
+
+	client.Close()
 	hub.mutex.Lock()
 	defer hub.mutex.Unlock()
 
 	i := -1
-
 	for j, c := range hub.clients {
 		if c.id == client.id {
 			i = j
+			break
 		}
 	}
-
 	copy(hub.clients[i:], hub.clients[i+1:])
 	hub.clients[len(hub.clients)-1] = nil
 	hub.clients = hub.clients[:len(hub.clients)-1]
 
 }
 
-func (hub *Hub) Broadcast(message interface{}, ingore *Client) {
-	data, _ := json.Marshal(message)
-	for _, client := range hub.clients {
-		if client != ingore {
-			client.outbound <- data
-		}
+func (hub *Hub) HandleWebSocket(w http.ResponseWriter, r *http.Request) {
+	socket, err := upgrader.Upgrade(w, r, nil)
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Error upgrading connection", http.StatusInternalServerError)
+		return
 	}
+	client := NewClient(hub, socket)
+	hub.register <- client
+
+	go client.Write()
 }

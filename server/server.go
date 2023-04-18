@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 	"jjchavarrg.com/go/rest-ws/database"
 	"jjchavarrg.com/go/rest-ws/repository"
 	"jjchavarrg.com/go/rest-ws/websocket"
@@ -58,6 +59,7 @@ func (b *Broker) Start(binder func(s Server, r *mux.Router)) {
 	b.router = mux.NewRouter()
 	binder(b, b.router)
 	// Connecting to Database
+	handler := cors.Default().Handler(b.router)
 	repo, err := database.NewPostgresRepository(b.config.DatabaseUrl)
 	if err != nil {
 		log.Fatal(err)
@@ -65,7 +67,7 @@ func (b *Broker) Start(binder func(s Server, r *mux.Router)) {
 	go b.hub.Run()
 	repository.SetRepository(repo)
 	log.Println("starting server on port", b.config.Port)
-	if err := http.ListenAndServe(b.config.Port, b.router); err != nil {
+	if err := http.ListenAndServe(b.config.Port, handler); err != nil {
 		log.Println("error starting server:", err)
 	} else {
 		log.Fatalf("server stopped")

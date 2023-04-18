@@ -1,8 +1,6 @@
 package websocket
 
-import (
-	"github.com/gorilla/websocket"
-)
+import "github.com/gorilla/websocket"
 
 type Client struct {
 	hub      *Hub
@@ -29,6 +27,10 @@ func (c *Client) Write() {
 			}
 			c.socket.WriteMessage(websocket.TextMessage, message)
 		}
-
 	}
+}
+
+func (c Client) Close() {
+	c.socket.Close()
+	close(c.outbound)
 }
