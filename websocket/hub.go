@@ -1,6 +1,7 @@
 package websocket
 
 import (
+	"encoding/json"
 	"github.com/gorilla/websocket"
 	"log"
 	"net/http"
@@ -82,4 +83,13 @@ func (hub *Hub) onDisconnect(client *Client) {
 	hub.clients[len(hub.clients)-1] = nil
 	hub.clients = hub.clients[:len(hub.clients)-1]
 
+}
+
+func (hub *Hub) Broadcast(message interface{}, ingore *Client) {
+	data, _ := json.Marshal(message)
+	for _, client := range hub.clients {
+		if client != ingore {
+			client.outbound <- data
+		}
+	}
 }
