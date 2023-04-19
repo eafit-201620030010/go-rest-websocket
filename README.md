@@ -21,7 +21,7 @@ To deploy this project run
 ### Git clone
 
 ```bash
-  git clone https://github.com/eafit-201620030010/go-rest-websockets.git
+  git clone https://github.com/eafit-201620030010/go-rest-websocket.git
 ```
 
 ### Docker build database
