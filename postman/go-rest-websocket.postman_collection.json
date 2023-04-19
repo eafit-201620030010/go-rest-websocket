@@ -1,0 +1,321 @@
+{
+	"info": {
+		"_postman_id": "c734f527-e398-485a-827c-aa14ae8c2542",
+		"name": "go-rest-websocket",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26723622"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"jjchavarrg@eafit.edu.co\",\n    \"password\": \"password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5050/api/v1/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5050",
+							"path": [
+								"api",
+								"v1",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"jjchavarrg@eafit.edu.co\",\n    \"password\": \"password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5050/api/v1/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5050",
+							"path": [
+								"api",
+								"v1",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "me",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJPYUpJVHNTUUJ6WE5vUmpSZXZWelNGWFVRcSIsImV4cCI6MTY4MTk2NTQ4Mn0.zFKsb867XcBZKWUQ4hbLWSTZPncNX_D1SK-RlTMt-dg",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5050/api/v1/me",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5050",
+							"path": [
+								"api",
+								"v1",
+								"me"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "post",
+			"item": [
+				{
+					"name": "post",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJPYUpJVHNTUUJ6WE5vUmpSZXZWelNGWFVRcSIsImV4cCI6MTY4MTk2NTQ4Mn0.zFKsb867XcBZKWUQ4hbLWSTZPncNX_D1SK-RlTMt-dg",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"post_content\": \"my post ws\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5050/api/v1/posts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5050",
+							"path": [
+								"api",
+								"v1",
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "post",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJPYUpJVHNTUUJ6WE5vUmpSZXZWelNGWFVRcSIsImV4cCI6MTY4MTk2NTQ4Mn0.zFKsb867XcBZKWUQ4hbLWSTZPncNX_D1SK-RlTMt-dg",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"post_content\": \"my post\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5050/api/v1/posts?page=0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5050",
+							"path": [
+								"api",
+								"v1",
+								"posts"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "post",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJPVTJDNk1jTEJHb3g4R3JWQ2JqVnIwUURUZCIsImV4cCI6MTY4MTc3MzUxMn0.WzjReY-AMRARt4uMiBpoQuYFbRCpw51f4jwD-aG10_U",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"post_content\": \"my post edit\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5050/api/v1/posts/2OU2OseMN0gpTwiAjbrKd0y9aPx",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5050",
+							"path": [
+								"api",
+								"v1",
+								"posts",
+								"2OU2OseMN0gpTwiAjbrKd0y9aPx"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "postById",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJPVTJDNk1jTEJHb3g4R3JWQ2JqVnIwUURUZCIsImV4cCI6MTY4MTc3MzUxMn0.WzjReY-AMRARt4uMiBpoQuYFbRCpw51f4jwD-aG10_U",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5050/api/v1/posts/2OU2OseMN0gpTwiAjbrKd0y9aPx",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5050",
+							"path": [
+								"api",
+								"v1",
+								"posts",
+								"2OU2OseMN0gpTwiAjbrKd0y9aPx"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "post",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJPYUpJVHNTUUJ6WE5vUmpSZXZWelNGWFVRcSIsImV4cCI6MTY4MTk2NTQ4Mn0.zFKsb867XcBZKWUQ4hbLWSTZPncNX_D1SK-RlTMt-dg",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5050/api/v1/posts/2OU2OseMN0gpTwiAjbrKd0y9aPx",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5050",
+							"path": [
+								"api",
+								"v1",
+								"posts",
+								"2OU2OseMN0gpTwiAjbrKd0y9aPx"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "welcome-api",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5050/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5050",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
